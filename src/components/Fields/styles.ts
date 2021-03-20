@@ -17,14 +17,14 @@ margin: {
     margin: theme.spacing(1),
 },
 button:{
-    position: "absolute",
-    width: 110,
-    height: 35,
-    left: 560,
-    top: 400,
+    
+    
+    
+    
+    
     background: "#001F60",
     borderRadius: 34,
-    color:'#ffffff'
+    
 }
 }))
 export default styles

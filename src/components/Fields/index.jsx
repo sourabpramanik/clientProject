@@ -17,42 +17,42 @@ import {
 require('dotenv').config()
 const IDType = [
     {
-      value: 'ADC',
+      value: 'Aadhaar Card',
       label: 'Aadhaar Card',
     },
     {
-      value: 'DVL',
+      value: 'Driving License',
       label: 'Driving License',
     },
     {
-      value: 'PAN',
+      value: 'PAN Card',
       label: 'PAN Card',
     },
     {
-      value: 'PAP',
+      value: 'Passport',
       label: 'Passport',
     },
     {
-        value: 'PPB',
+        value: 'Pension Passbook',
         label: 'Pension Passbook',
       },
   ];
 const Gender=[
   {
-    value:'M',
+    value:'Male',
     label:'Male'
   },
   {
-    value:'F',
+    value:'Female',
     label:'Female'
   },
   {
-    value:'O',
+    value:'Others',
     label:'Others'
   }
 ]
 
-
+const creds = require('../../client1-308111-5e4391b86b21.json')
 export default function Fields(){
     const classes = styles()
     const [Id, setId] = React.useState('');
@@ -62,15 +62,12 @@ export default function Fields(){
     const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
     const submitEvent = async () => {
-      const SHEET_ID = process.env.REACT_APP_SHEET_ID;
+      const SHEET_ID = '1VIQwP6Z0Y00O8tn99jloUNp-UQk_JsxzU4oAxTnPPko';
       const doc = new GoogleSpreadsheet(SHEET_ID);
-      await doc.useServiceAccountAuth({
-          private_key: process.env.REACT_APP_GOOGLE_PRIVATE_KEY.replace(/\\n/gm, "\n"),
-          client_email: process.env.REACT_APP_GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      });
+      await doc.useServiceAccountAuth(creds);
       await doc.loadInfo()
         const sheet = doc.sheetsByIndex[0]
-        await sheet.addRow({ IDType: Id, IDNumber: IdNumber, Name: name, Gender: gender, Date: selectedDate });
+        await sheet.addRow({ ID_Type: Id, ID_Number: IdNumber, Name: name, Gender: gender, Date_of_birth: selectedDate });
         setId('')
         setIdNumber('')
         setName('')
@@ -90,7 +87,7 @@ export default function Fields(){
     };
 
     const handleNameChange = (event) => {
-      setName(event);
+      setName(event.target.value);
     };
     
     const handleGenderChange = (event) => {
@@ -163,7 +160,16 @@ export default function Fields(){
           />
             </FormControl>
           </MuiPickersUtilsProvider>
-          <Button variant="contained" className={classes.button} onClick={submitEvent}>
+          <Button variant="contained" style={{
+            backgroundColor:"#001F60",
+            borderRadius:34,
+            top: 400,
+            left: 560,
+            position: "absolute",
+            height: 35,
+            width: 110,
+            color:'#ffffff'
+            }} onClick={submitEvent}>
             Register
           </Button>
          </div>

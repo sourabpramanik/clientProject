@@ -10,18 +10,20 @@ import {
   InputLabel,
   TextField,
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
+  InputAdornment,
   Slide } from '@material-ui/core';
   import DateFnsUtils from '@date-io/date-fns';
+  import MuiPhoneNumber from "material-ui-phone-number";
   import {
     MuiPickersUtilsProvider,
   
     KeyboardDatePicker,
   } from '@material-ui/pickers';
 import NextFields from './nextFields'
-
+import DailogBox from '../Dailog/index'
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const IDType = [
     {
@@ -64,9 +66,7 @@ const creds = require('../../client1-308111-5e4391b86b21.json')
 export default function Fields(){
     
     const classes = styles()
-    //const [uID, setUID] = React.useState()
     const [open, setOpen] = React.useState(false);
-
     const [Id, setId] = React.useState('');
     const [IdNumber, setIdNumber] = React.useState('');
     const [name, setName] = React.useState('')
@@ -76,8 +76,6 @@ export default function Fields(){
     const [address, setAddress] = React.useState('')
     const [selectedDate, setSelectedDate] = React.useState(new Date(''));
     const [showForm, setShowForm] = React.useState(false)
-    
-    const [otp, setOtp] = React.useState('');
 
 
     function uuid() {
@@ -86,21 +84,20 @@ export default function Fields(){
         return v.toString(16);
       });
     }
-    const submitOTP = async()=>{
-      const SHEET_ID = '1VIQwP6Z0Y00O8tn99jloUNp-UQk_JsxzU4oAxTnPPko';
-      const doc = new GoogleSpreadsheet(SHEET_ID);
-      await doc.useServiceAccountAuth(creds);
-      await doc.loadInfo()
-        const sheet = doc.sheetsByIndex[0]
-        await sheet.addRow({
-          OTP:otp,
-          Phone_Number:phone,
-        })
-        setOtp('')
-        setPhone('')
-        
-        setOpen(false)
+    function genOtp() {
+
+          var add = 1, max = 12 - add, n=6;   // 12 is the min safe number Math.random() can generate without it starting to pad the end with zeros.   
+
+          if ( n > max ) {
+            return genOtp(max) + genOtp(n - max);
+          }
+          max        = Math.pow(10, n+add);
+          var min    = max/10; // Math.pow(10, n) basically
+          var number = Math.floor( Math.random() * (max - min + 1) ) + min;
+          return ("" + number).substring(add); 
     }
+
+    
     const submitEvent = async () => {
       const SHEET_ID = '1VIQwP6Z0Y00O8tn99jloUNp-UQk_JsxzU4oAxTnPPko';
       const doc = new GoogleSpreadsheet(SHEET_ID);
@@ -130,13 +127,7 @@ export default function Fields(){
         setSelectedDate('')
         setShowForm(true)
     }
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
+   
     const handleIdChange = (event) => {
       setId(event.target.value);
     };
@@ -168,9 +159,27 @@ export default function Fields(){
     const handleGenderChange = (event) => {
       setGender(event.target.value);
     };
-    const handleOTPChange=(event) => {
-      setOtp(event.target.value);
+    const handleClickOpen = () => {
+      setOpen(true);
     };
+    const handleClose = () => {
+      setOpen(false);
+    };
+    const addOTP = async()=>{
+      const SHEET_ID = '1VIQwP6Z0Y00O8tn99jloUNp-UQk_JsxzU4oAxTnPPko';
+      const doc = new GoogleSpreadsheet(SHEET_ID);
+      await doc.useServiceAccountAuth(creds);
+      await doc.loadInfo()
+        const sheet = doc.sheetsByIndex[0]
+        await sheet.addRow({
+          GEN_OTP:genOtp(),
+          Phone_Number:phone,
+        })
+        
+        setPhone(phone)
+        setOpen(true);
+        
+    }
     return(
          <div className={classes.root}>
            <FormControl fullWidth className={classes.formControl}>
@@ -191,10 +200,17 @@ export default function Fields(){
               width: 110,
               color:'#ffffff'
               
-              }}>
+              }}onClick={addOTP}>
               Get OTP
             </Button>
-            
+            <Dialog
+              open={open}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={handleClose}
+            >
+              <DailogBox/>
+            </Dialog>
           </FormControl>
            <FormControl fullWidth className={classes.formControl}>
             <InputLabel id="filled-size-normal">Photo ID Proof</InputLabel>

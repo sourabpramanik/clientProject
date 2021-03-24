@@ -9,10 +9,10 @@ export default function Register(){
             <div className={classes.topBar}>
                 <img src={flag} alt="flag" className={classes.flag}/>
                 <div className={classes.head1}>
-                GOVERMENT OF INDIA
+                Registered under Ministry of Corporate Affairs
                 </div>
                 <div className={classes.head2}>
-                Helpline Number : +91-11-23978046 | Toll Free : 1075 
+                Helpline Number : +91 8269844998| email : synaptic.universal@gmail.com 
                 </div>
             </div>
             <div >

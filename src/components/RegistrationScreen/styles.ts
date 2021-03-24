@@ -31,7 +31,7 @@ head2:{
     position: "absolute",
     width: "fit-content",
     height: 40,
-    left: 1300,
+    left: 1150,
     top: 15,
     fontFamily: "Montserrat",
     color: "white",
@@ -64,7 +64,7 @@ head3:{
 rectangle2:{
     position: "absolute",
     width: 843,
-    height: 512,
+    height: 652,
     left: 450,
     top: 175,
 

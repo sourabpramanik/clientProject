@@ -308,9 +308,10 @@ export default function Fields(){
               }} onClick={submitEvent}>
               Register
             </Button>
-            {showForm==true && (<div className={classes.rectangle2}><NextFields/></div>)}
-          
+            <div className={classes.rectangle2}><NextFields/></div>
          </div>
         
         )
 }
+//{showForm==true && (<div className={classes.rectangle2}><NextFields/></div>)}
+          

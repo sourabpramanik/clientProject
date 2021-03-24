@@ -21,7 +21,7 @@ label:{
 rectangle2:{
     position: "absolute",
     width: 843,
-    height: 752,
+    height: "fit-content",
     left:-1,
     paddingBottom: 20,
     top: 685,
@@ -42,6 +42,10 @@ button:{
 phoneInput:{
     maxWidth:315
 },
+radio:{
+    margin:10,
+    flexDirection:'row'
+}
 
 }))
 export default styles

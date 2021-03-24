@@ -109,8 +109,6 @@ export default function Fields(){
           ID_Type: Id, 
           ID_Number: IdNumber, 
           Name: name, 
-          
-         
           Gender: gender,
           Age:age,
           Address:address, 
@@ -119,8 +117,6 @@ export default function Fields(){
         setId('')
         setIdNumber('')
         setName('')
-        
-       
         setGender('')
         setAge('')
         setAddress('')

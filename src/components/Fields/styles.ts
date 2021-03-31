@@ -13,6 +13,9 @@ formControl: {
 },
 textField:{
     justifyItems:"space-around",
+    margin:10,
+   
+
 },
 label:{
     margin:10,

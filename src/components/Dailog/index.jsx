@@ -5,12 +5,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
-import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const creds = require('../../client1-308111-5e4391b86b21.json')
 
 export default function DailogBox() {
   const [open, setOpen] = React.useState(false);
@@ -22,16 +20,8 @@ export default function DailogBox() {
   const handleOtpchange = (e) => {
     setOtp(e.target.value);
   };
-  const verifyOTP = async()=>{
-    const SHEET_ID = '1VIQwP6Z0Y00O8tn99jloUNp-UQk_JsxzU4oAxTnPPko';
-    const doc = new GoogleSpreadsheet(SHEET_ID);
-    await doc.useServiceAccountAuth(creds);
-    await doc.loadInfo()
-      const sheet = doc.sheetsByIndex[0]
-      await sheet.addRow({
-        SUB_OTP:otp,
-      })
-      setOtp('')
+  const verifyOTP = ()=>{
+    
       setOpen(false);
       
   }
